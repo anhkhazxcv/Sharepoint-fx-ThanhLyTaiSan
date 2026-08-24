@@ -1,0 +1,216 @@
+@import '../styles/liquidation-theme';
+
+.panel {
+  margin-bottom: 20px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+.mainColumn {
+  @include magPageCard;
+  padding: 18px;
+  background: $mag-surface-card;
+  box-shadow: $mag-shadow-card;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.title {
+  display: block;
+  font-size: $mag-font-title-md;
+  color: $mag-text-title;
+}
+
+.subtitle {
+  display: block;
+  margin-top: 4px;
+  font-size: $mag-font-meta;
+  color: $mag-text-muted;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: $mag-font-meta;
+  color: #5a5044;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 56px 1.5fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-card;
+}
+
+.checkboxWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: $mag-radius-sm;
+  overflow: hidden;
+  border: 1px solid $mag-border-default;
+  background: $mag-surface-muted;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.thumbPlaceholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f2eadc 0%, #fffaf3 100%);
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.itemInfo strong {
+  color: $mag-text-body;
+}
+
+.itemInfo span {
+  font-size: $mag-font-label;
+  color: #7c6f61;
+}
+
+.quantityBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5a5044;
+}
+
+.quantityBox input {
+  width: 74px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid $mag-border-input;
+  border-radius: $mag-radius-sm;
+}
+
+.priceCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #ecd1cb;
+  border-radius: $mag-radius-sm;
+  background: $mag-status-error-bg;
+  color: $mag-status-error-text;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.summaryColumn {
+  position: sticky;
+  top: 16px;
+}
+
+.summaryCard {
+  @include magPageCard;
+  padding: 18px;
+  background: $mag-surface-section;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.summaryTitle {
+  font-size: $mag-font-body;
+  color: $mag-text-title;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: $mag-font-meta;
+  color: $mag-text-muted;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid $mag-border-default;
+  font-size: $mag-font-body;
+  color: $mag-text-accent;
+}
+
+.checkoutButton {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryColumn {
+    position: static;
+  }
+
+  .row {
+    grid-template-columns: auto 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .summary {
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,9 @@
+export const LST_SAN_PHAM: string = 'lstSanPham';
+export const LST_DON_HANG: string = 'lstDonHang';
+export const LST_CHI_TIET_DON_HANG: string = 'lstChiTietDonHang';
+export const LST_GIO_HANG: string = 'lstGioHang';
+export const LST_CHI_TIET_GIO_HANG: string = 'lstChiTietGioHang';
+export const LST_THONG_TIN_NGAN_HANG: string = 'lstThongTinNganHang';
+export const LST_CONFIG: string = 'lstConfig';
+export const LST_ROLE: string = 'Role';
+export const IMAGE_LIBRARY_TITLE: string = 'TaiSanImage';

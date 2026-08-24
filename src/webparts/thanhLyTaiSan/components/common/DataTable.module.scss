@@ -1,0 +1,123 @@
+@import '../../styles/liquidation-theme';
+
+.tableWrap {
+  overflow: auto;
+  max-height: min(72vh, 720px);
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-lg;
+  background: $mag-surface-card;
+  box-shadow: $mag-shadow-card;
+}
+
+.table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  background: $mag-surface-card;
+}
+
+.table th,
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid $mag-border-table;
+  text-align: left;
+  font-size: $mag-font-meta;
+  vertical-align: middle;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: $mag-surface-table-head;
+  color: $mag-text-label;
+  font-weight: $mag-weight-semibold;
+  font-size: $mag-font-label;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 1px 0 $mag-border-table;
+}
+
+.sortableTh {
+  padding: 0;
+}
+
+.sortActiveTh {
+  background: $mag-surface-section;
+}
+
+.table tbody tr:nth-child(even) td {
+  background: $mag-surface-muted;
+}
+
+.table tbody tr:hover td {
+  background: $mag-surface-hover;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sortableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 14px 16px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  text-align: left;
+
+  &:focus-visible {
+    outline: 2px solid $mag-accent-gold;
+    outline-offset: -2px;
+  }
+}
+
+.sortIndicator {
+  flex-shrink: 0;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.sortIndicatorInactive {
+  color: $mag-text-muted;
+  opacity: 0.55;
+}
+
+.sortIndicatorActive {
+  color: $mag-text-accent;
+  opacity: 1;
+}
+
+.headerText {
+  display: inline-flex;
+  align-items: center;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight .sortableHeader {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sortableHeader {
+    transition: none;
+  }
+}

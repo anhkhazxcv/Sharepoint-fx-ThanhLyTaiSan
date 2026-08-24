@@ -1,0 +1,96 @@
+@import './liquidation-theme';
+
+@mixin magFluentDropdown {
+  min-width: 0;
+
+  :global {
+    .ms-Dropdown-title {
+      height: 42px;
+      line-height: 40px;
+      padding: 0 14px;
+      border: 1px solid $mag-border-input;
+      border-radius: $mag-radius-md;
+      background: $mag-surface-card;
+      color: $mag-text-body;
+      font-family: $mag-font-family-base;
+      font-size: $mag-font-meta;
+      font-weight: $mag-weight-regular;
+      transition: border-color $mag-transition-fast, box-shadow $mag-transition-fast;
+
+      &:hover {
+        border-color: $mag-accent-gold;
+      }
+
+      &:focus,
+      &:focus-visible {
+        border-color: $mag-accent-gold;
+        box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+      }
+    }
+
+    .ms-Dropdown--multiselect .ms-Dropdown-title {
+      min-height: 42px;
+      height: auto;
+      line-height: 1.4;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .ms-Dropdown-caretDownWrapper {
+      color: $mag-text-accent;
+    }
+
+    .ms-Dropdown-label {
+      font-family: $mag-font-family-base;
+      font-size: $mag-font-label;
+      font-weight: $mag-weight-semibold;
+      color: $mag-text-label;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0;
+      margin-bottom: 8px;
+    }
+
+    .ms-Dropdown-callout {
+      border: 1px solid $mag-border-default;
+      border-radius: $mag-radius-lg;
+      box-shadow: $mag-shadow-card;
+    }
+
+    .ms-Dropdown-item {
+      font-family: $mag-font-family-base;
+      color: $mag-text-body;
+      font-size: $mag-font-meta;
+      font-weight: $mag-weight-regular;
+
+      &:hover {
+        background: $mag-surface-hover;
+        color: $mag-text-body;
+      }
+    }
+
+    .ms-Dropdown-itemSelected {
+      background: $mag-surface-section;
+      color: $mag-text-accent;
+      font-weight: $mag-weight-semibold;
+
+      &:hover {
+        background: $mag-surface-section;
+        color: $mag-text-accent;
+      }
+    }
+
+    .ms-Checkbox-checkbox {
+      border-color: $mag-border-input;
+    }
+
+    .ms-Checkbox.is-checked .ms-Checkbox-checkbox {
+      background: $mag-gradient-primary;
+      border-color: $mag-primary-border;
+    }
+
+    .ms-Checkbox.is-checked .ms-Checkbox-checkmark {
+      color: $mag-text-on-primary;
+    }
+  }
+}

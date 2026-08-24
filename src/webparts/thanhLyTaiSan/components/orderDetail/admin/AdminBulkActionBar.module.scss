@@ -1,0 +1,47 @@
+@import '../../../styles/liquidation-theme';
+
+.bulkActionBar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-section;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.bulkSelectLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: $mag-font-meta;
+  color: $mag-text-body;
+}
+
+.bulkCheckbox {
+  width: 16px;
+  height: 16px;
+}
+
+.bulkActionMeta {
+  flex: 1 1 200px;
+  font-size: $mag-font-meta;
+  color: $mag-text-muted;
+}
+
+.bulkActionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .bulkActionButtons {
+    width: 100%;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "rootDir": "../..",
+  "moduleFileExtensions": ["js", "jsx", "json"],
+  "moduleNameMapper": {
+    "\\.(css|less|sass|scss)$": "<rootDir>/config/jest/styleMock.js",
+    "\\.(png|jpg|jpeg|gif|svg|resx)$": "<rootDir>/config/jest/fileMock.js"
+  },
+  "transform": {
+    "^.+\\.jsx?$": "<rootDir>/config/jest/jsTransformer.js"
+  }
+}

@@ -1,0 +1,188 @@
+// MAG liquidation design tokens — single source for gold/brown theme
+
+// Surfaces
+$mag-surface-page: #fbf7ef;
+$mag-surface-card: #fffdfa;
+$mag-surface-card-alt: #fffdf8;
+$mag-surface-muted: #faf7f1;
+$mag-surface-section: #fff8ef;
+$mag-surface-table-head: #f8f4ec;
+$mag-surface-hover: #fcf8f2;
+
+// Borders
+$mag-border-default: #eadfce;
+$mag-border-input: #d8c9ae;
+$mag-border-ghost: #dccfb9;
+$mag-border-dialog: #ead8bb;
+$mag-border-table: #efe5d6;
+
+// Text
+$mag-text-title: #6a4a1d;
+$mag-text-accent: #7b571f;
+$mag-text-body: #2b2419;
+$mag-text-muted: #736557;
+$mag-text-label: #7a6a58;
+$mag-text-on-primary: #fffaf3;
+$mag-text-on-sidebar: #fffdf8;
+
+// Accent / CTA
+$mag-accent-gold: #b78a36;
+$mag-accent-dark: #8b6021;
+$mag-primary-border: #9b722f;
+$mag-gradient-primary: linear-gradient(135deg, #a7772f 0%, #8b6021 100%);
+$mag-gradient-primary-alt: linear-gradient(180deg, #a97928 0%, #7b571f 100%);
+$mag-gradient-sidebar: linear-gradient(180deg, #8a6222 0%, #7b571f 100%);
+
+// Status
+$mag-status-success-bg: #e9f5eb;
+$mag-status-success-text: #2e7d32;
+$mag-status-warning-bg: #fff1df;
+$mag-status-warning-text: #d9822b;
+$mag-status-warning-strong: #8b6021;
+$mag-status-neutral-bg: #f0ebe4;
+$mag-status-neutral-text: #82694c;
+$mag-status-error-bg: #fff5f5;
+$mag-status-error-text: #b42318;
+
+// Overlay
+$mag-overlay: rgba(63, 44, 20, 0.34);
+
+// Radius
+$mag-radius-sm: 8px;
+$mag-radius-md: 12px;
+$mag-radius-btn: 14px;
+$mag-radius-lg: 18px;
+$mag-radius-xl: 20px;
+$mag-radius-dialog: 24px;
+$mag-radius-pill: 999px;
+
+// Typography
+$mag-font-family-base: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+$mag-font-family-display: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+$mag-font-title-xl: 28px;
+$mag-font-title-lg: 24px;
+$mag-font-title-md: 20px;
+$mag-font-body: 15px;
+$mag-font-meta: 13px;
+$mag-font-label: 12px;
+
+$mag-weight-regular: 400;
+$mag-weight-medium: 500;
+$mag-weight-semibold: 600;
+$mag-weight-bold: 700;
+
+@mixin magTypographyBase {
+  font-family: $mag-font-family-base;
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Shadows
+$mag-shadow-card: 0 8px 24px rgba(84, 58, 20, 0.12);
+$mag-shadow-dialog: 0 22px 40px rgba(67, 46, 23, 0.18);
+$mag-shadow-primary: 0 12px 24px rgba(139, 96, 33, 0.2);
+
+// Transitions
+$mag-transition-fast: 0.18s ease;
+
+@mixin magPrimaryButton {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid $mag-primary-border;
+  border-radius: $mag-radius-btn;
+  background: $mag-gradient-primary;
+  color: $mag-text-on-primary;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  cursor: pointer;
+  box-shadow: $mag-shadow-primary;
+  transition: transform $mag-transition-fast, box-shadow $mag-transition-fast;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(139, 96, 33, 0.26);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@mixin magGhostButton {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid $mag-border-ghost;
+  border-radius: $mag-radius-btn;
+  background: $mag-surface-card;
+  color: $mag-text-accent;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  cursor: pointer;
+  transition: transform $mag-transition-fast, border-color $mag-transition-fast;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    border-color: $mag-accent-gold;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+  }
+}
+
+@mixin magDangerButton {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid #e8b4b4;
+  border-radius: $mag-radius-btn;
+  background: $mag-status-error-bg;
+  color: $mag-status-error-text;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+@mixin magPageCard {
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-muted;
+}
+
+@mixin magDialogOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: $mag-overlay;
+  backdrop-filter: blur(4px);
+}
+
+@mixin magShimmer {
+  background: linear-gradient(90deg, #f2eadc 0%, #fffaf3 50%, #f2eadc 100%);
+  background-size: 200% 100%;
+  animation: magSkeletonPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes magSkeletonPulse {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}

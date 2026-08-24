@@ -1,0 +1,26 @@
+@import '../../styles/liquidation-theme';
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 24px;
+  border: 1px dashed $mag-border-input;
+  border-radius: $mag-radius-xl;
+  background: $mag-surface-card;
+  text-align: center;
+}
+
+.title {
+  font-size: $mag-font-body;
+  color: $mag-text-title;
+}
+
+.description {
+  max-width: 420px;
+  font-size: $mag-font-meta;
+  line-height: 1.6;
+  color: $mag-text-muted;
+}

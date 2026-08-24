@@ -1,0 +1,46 @@
+@import '../styles/liquidation-theme';
+
+.searchBox {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid #dccfb9;
+  border-radius: 16px;
+  background: #fffcf8;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus-within {
+    border-color: #b78a36;
+    box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: #9c7c4d;
+  flex: 0 0 auto;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  font-size: 15px;
+  color: #31271e;
+  background: transparent;
+
+  &::placeholder {
+    color: #8f7d67;
+  }
+}

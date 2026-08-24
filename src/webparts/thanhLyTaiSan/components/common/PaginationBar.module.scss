@@ -1,0 +1,96 @@
+@import '../../styles/liquidation-theme';
+
+.paginationBar {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-xl;
+  background: rgba(255, 255, 255, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summary {
+  font-size: 14px;
+  color: $mag-text-label;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pageSizeControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #5a5044;
+}
+
+.pageSizeSelect {
+  min-width: 78px;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid $mag-border-input;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-card;
+  color: $mag-text-body;
+  outline: none;
+
+  &:focus {
+    border-color: $mag-accent-gold;
+    box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+  }
+}
+
+.pageNavigation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageButton {
+  min-width: 86px;
+  height: 42px;
+  padding: 0 16px;
+  border: 1px solid $mag-border-input;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-card;
+  color: $mag-text-accent;
+  font-weight: $mag-weight-bold;
+  cursor: pointer;
+  transition: transform $mag-transition-fast, box-shadow $mag-transition-fast, border-color $mag-transition-fast;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    border-color: $mag-accent-gold;
+    box-shadow: 0 10px 18px rgba(98, 77, 40, 0.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.pageIndicator {
+  font-size: 14px;
+  color: $mag-text-muted;
+}
+
+@media (max-width: 900px) {
+  .paginationBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "MAG-thanh-ly-tai-san-client-side-solution",
+    "id": "747f52a5-f25c-433f-9dcf-521a522375ca",
+    "version": "1.0.0.2",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "spfx-webpart description"
+      },
+      "longDescription": {
+        "default": "spfx-webpart description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "spfx-webpart Feature",
+        "description": "The feature that activates elements of the spfx-webpart solution.",
+        "id": "beaeddb4-3055-41c3-8e9b-96e989096d87",
+        "version": "1.0.0.2"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/MAG-thanh-ly-tai-san.sppkg"
+  }
+}

@@ -1,0 +1,167 @@
+@import '../styles/liquidation-theme';
+
+.filterShell {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid #eadfce;
+  background: rgba(255, 253, 250, 0.94);
+  box-shadow: 0 16px 30px rgba(98, 77, 40, 0.07);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.resultSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resultLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b7358;
+}
+
+.resultValue {
+  font-size: 24px;
+  font-weight: 800;
+  color: #261f18;
+}
+
+.utilityGroup {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.searchRow {
+  display: flex;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.filterField,
+.sortField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.filterLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #675847;
+  letter-spacing: 0.04em;
+}
+
+.select {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #d8c9ae;
+  border-radius: 14px;
+  background: #fffcf8;
+  font-size: 14px;
+  color: #31271e;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    border-color: #b78a36;
+    box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+  }
+}
+
+.actionArea {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.clearButton {
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid #d8c9ae;
+  border-radius: 14px;
+  background: #fffdfa;
+  color: #7b571f;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(98, 77, 40, 0.1);
+  }
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #f6eddf;
+  border: 1px solid #ead7b8;
+  color: #7b571f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .topBar,
+  .utilityGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filterGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .actionArea {
+    justify-content: stretch;
+  }
+
+  .clearButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .filterShell {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .resultValue {
+    font-size: 20px;
+  }
+
+  .filterGrid {
+    grid-template-columns: 1fr;
+  }
+}

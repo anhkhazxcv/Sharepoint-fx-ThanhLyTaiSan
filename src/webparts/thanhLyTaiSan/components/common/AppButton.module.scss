@@ -1,0 +1,38 @@
+@import '../../styles/liquidation-theme';
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.primary {
+  @include magPrimaryButton;
+}
+
+.ghost {
+  @include magGhostButton;
+}
+
+.secondary {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid #d5b17a;
+  border-radius: $mag-radius-btn;
+  background: $mag-surface-section;
+  color: $mag-accent-dark;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+.danger {
+  @include magDangerButton;
+}

@@ -1,0 +1,96 @@
+@import '../../styles/liquidation-theme';
+
+.stepperCard {
+  background: #fffdfa;
+  border: 1px solid #eadfce;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(98, 77, 40, 0.06);
+  padding: 20px 24px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.stepItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.stepWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 80px;
+}
+
+.stepCircle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #d8c9ae;
+  background: #fffdfa;
+  color: #8b7358;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.stepDone,
+.stepActive {
+  border-color: #8a6222;
+  background: #8a6222;
+  color: #ffffff;
+}
+
+.stepLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6f6457;
+  text-align: center;
+}
+
+.stepLine {
+  flex: 1;
+  height: 2px;
+  background: #eadfce;
+  margin: 0 12px;
+}
+
+.stepLineActive {
+  background: #8a6222;
+}
+
+@media (max-width: 768px) {
+  .stepperCard {
+    padding: 16px;
+  }
+
+  .track {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .stepItem {
+    width: 100%;
+  }
+
+  .stepWrap {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .stepLine {
+    display: none;
+  }
+}

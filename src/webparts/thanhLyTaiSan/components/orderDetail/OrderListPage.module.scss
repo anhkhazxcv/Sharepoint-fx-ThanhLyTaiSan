@@ -1,0 +1,168 @@
+@import '../../styles/liquidation-theme';
+
+.page {
+  padding: 24px;
+}
+
+.summaryChip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: $mag-radius-pill;
+  background: $mag-surface-section;
+  border: 1px solid #efdfc5;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  color: $mag-text-accent;
+}
+
+.card {
+  margin: 24px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #e7dccd;
+  border-radius: 24px;
+  box-shadow: 0 16px 30px rgba(67, 46, 23, 0.07);
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #6a4a1d;
+}
+
+.subtitle {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #736557;
+}
+
+.desktopTable {
+  display: block;
+}
+
+.mobileList {
+  display: none;
+}
+
+.codeCell {
+  font-weight: 800;
+  color: #7b571f;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badgeSuccess {
+  background: #e9f5eb;
+  color: #2e7d32;
+}
+
+.badgeWarning {
+  background: #fff1df;
+  color: #d9822b;
+}
+
+.badgeNeutral {
+  background: #f0ebe4;
+  color: #82694c;
+}
+
+.linkButton {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid #dccfb9;
+  border-radius: 12px;
+  background: #fffdfa;
+  color: #7b571f;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mobileCard {
+  padding: 16px;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  background: #fffaf4;
+}
+
+.mobileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mobileRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #efe5d6;
+}
+
+.mobileLabel {
+  color: #736557;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.emptyState {
+  margin: 24px;
+  min-height: 240px;
+  border: 1px dashed #d8c9ae;
+  border-radius: 24px;
+  background: #faf7f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #736557;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .card,
+  .emptyState {
+    margin: 16px;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .desktopTable {
+    display: none;
+  }
+
+  .mobileList {
+    display: grid;
+    gap: 12px;
+  }
+}

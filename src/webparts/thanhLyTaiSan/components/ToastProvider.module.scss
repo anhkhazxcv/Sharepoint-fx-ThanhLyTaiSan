@@ -1,0 +1,50 @@
+@import '../styles/liquidation-theme';
+
+:global {
+  .Toastify__toast-container {
+    width: min(360px, calc(100vw - 32px));
+  }
+
+  .Toastify__toast {
+    border-radius: $mag-radius-md;
+    border: 1px solid rgba(122, 85, 40, 0.14);
+    box-shadow: $mag-shadow-card;
+    font-size: $mag-font-meta;
+    font-weight: $mag-weight-semibold;
+    line-height: 1.5;
+    min-height: auto;
+    padding: 14px 16px;
+  }
+
+  .Toastify__toast--success {
+    background: $mag-status-success-bg;
+    color: $mag-status-success-text;
+    border-color: rgba(46, 125, 50, 0.28);
+  }
+
+  .Toastify__toast--error {
+    background: $mag-status-error-bg;
+    color: $mag-status-error-text;
+    border-color: rgba(192, 57, 43, 0.28);
+  }
+
+  .Toastify__toast--info {
+    background: $mag-surface-card;
+    color: $mag-text-body;
+    border-color: rgba(122, 85, 40, 0.18);
+  }
+
+  .Toastify__close-button {
+    color: inherit;
+    opacity: 0.6;
+  }
+}
+
+.toastContainer {
+  top: 20px;
+  right: 20px;
+}
+
+.toastBody {
+  margin: 0;
+}

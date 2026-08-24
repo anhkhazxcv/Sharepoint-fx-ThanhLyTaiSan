@@ -1,0 +1,15 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+@import '../styles/liquidation-theme';
+
+.thanhLyTaiSan {
+  @include magTypographyBase;
+  min-height: 100vh;
+  background: $mag-surface-page;
+  font-size: $mag-font-body;
+  font-weight: $mag-weight-regular;
+  line-height: 1.5;
+}
+
+.teams {
+  font-family: $mag-font-family-base;
+}

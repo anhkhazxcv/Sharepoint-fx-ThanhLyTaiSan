@@ -1,0 +1,62 @@
+@import '../../styles/liquidation-theme';
+
+.fileInput {
+  display: none;
+}
+
+.dropZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 140px;
+  padding: 20px;
+  border: 1px dashed $mag-border-input;
+  border-radius: $mag-radius-md;
+  background: $mag-surface-section;
+  text-align: center;
+}
+
+.dropZoneTitle {
+  margin: 0;
+  font-size: $mag-font-body;
+  font-weight: $mag-weight-bold;
+  color: $mag-text-title;
+}
+
+.dropZoneHint {
+  margin: 0;
+  font-size: $mag-font-meta;
+  color: $mag-text-muted;
+}
+
+.fileName {
+  margin: 0;
+  font-size: $mag-font-meta;
+  font-weight: $mag-weight-bold;
+  color: $mag-text-accent;
+  word-break: break-word;
+}
+
+.summaryList {
+  margin: 0;
+  padding-left: 18px;
+  color: $mag-text-body;
+  font-size: $mag-font-meta;
+  line-height: 1.6;
+}
+
+.errorList {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: $mag-status-error-text;
+  font-size: $mag-font-meta;
+  line-height: 1.5;
+}
+
+.progressText {
+  margin: 0;
+  font-size: $mag-font-meta;
+  color: $mag-text-muted;
+}

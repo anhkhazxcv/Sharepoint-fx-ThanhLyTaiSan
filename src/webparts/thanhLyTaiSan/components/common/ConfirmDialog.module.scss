@@ -1,0 +1,67 @@
+@import '../../styles/liquidation-theme';
+
+.overlay {
+  @include magDialogOverlay;
+}
+
+.card {
+  width: min(100%, 520px);
+  border-radius: $mag-radius-dialog;
+  background: $mag-surface-card-alt;
+  border: 1px solid $mag-border-dialog;
+  box-shadow: $mag-shadow-dialog;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: $mag-font-title-lg;
+  line-height: 1.3;
+  color: $mag-text-title;
+}
+
+.closeButton {
+  min-width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: $mag-radius-md;
+  background: #f5ead7;
+  color: $mag-text-accent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+.body {
+  padding: 0 24px 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+@media (max-width: 900px) {
+  .overlay {
+    padding: 16px;
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+  }
+}
