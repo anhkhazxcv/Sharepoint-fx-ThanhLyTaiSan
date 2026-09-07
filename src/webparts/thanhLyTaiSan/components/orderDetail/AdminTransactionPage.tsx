@@ -4,6 +4,7 @@ import type { IOrderDetail } from './types';
 import { formatCurrency, formatDate } from './utils/format';
 import { scrollToElement } from '../utils/scrollToElement';
 import {
+  AppButton,
   ConfirmDialog,
   DataTable,
   DialogSection,
@@ -19,6 +20,10 @@ import { AdminOrderFilters } from './admin/AdminOrderFilters';
 import styles from './AdminTransactionPage.module.scss';
 
 const PAGE_SIZE_OPTIONS: number[] = [10, 20, 50];
+const AdminTransactionExportDialog = React.lazy(async () => {
+  const module = await import(/* webpackChunkName: 'admin-transaction-export-dialog' */ './AdminTransactionExportDialog');
+  return { default: module.AdminTransactionExportDialog };
+});
 
 type TAdminBulkActionType = 'payment' | 'handover';
 
@@ -131,6 +136,7 @@ export function AdminTransactionPage(props: IAdminTransactionPageProps): React.R
   const [selectedOrderIds, setSelectedOrderIds] = React.useState<string[]>([]);
   const [bulkDialogState, setBulkDialogState] = React.useState<IAdminBulkDialogState | undefined>(undefined);
   const [deleteTargetOrderId, setDeleteTargetOrderId] = React.useState<string | undefined>(undefined);
+  const [isExportDialogOpen, setIsExportDialogOpen] = React.useState<boolean>(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE_OPTIONS[0]);
   const listSectionRef = React.useRef<HTMLElement>(null);
@@ -449,12 +455,19 @@ export function AdminTransactionPage(props: IAdminTransactionPageProps): React.R
     );
   }
 
+  const exportButton: React.ReactElement = (
+    <AppButton variant="secondary" onClick={(): void => setIsExportDialogOpen(true)}>
+      Xuất giao dịch
+    </AppButton>
+  );
+
   return (
     <section className={styles.card} ref={listSectionRef}>
       <PageHeader
         title="Quản lý giao dịch admin"
         subtitle="Theo dõi toàn bộ đơn hàng và lọc theo mã đơn, thanh toán, bàn giao."
         meta={<span className={styles.summaryChip}>Tổng giao dịch: {filteredOrders.length}</span>}
+        actions={exportButton}
       />
 
       <AdminOrderFilters
@@ -632,6 +645,16 @@ export function AdminTransactionPage(props: IAdminTransactionPageProps): React.R
       >
         Bạn có chắc chắn muốn xóa đơn hàng này không? Chỉ có thể xóa đơn chưa được xác nhận thanh toán.
       </ConfirmDialog>
+
+      {isExportDialogOpen && (
+        <React.Suspense fallback={<></>}>
+          <AdminTransactionExportDialog
+            isOpen={isExportDialogOpen}
+            orders={filteredOrders}
+            onClose={(): void => setIsExportDialogOpen(false)}
+          />
+        </React.Suspense>
+      )}
     </section>
   );
 }

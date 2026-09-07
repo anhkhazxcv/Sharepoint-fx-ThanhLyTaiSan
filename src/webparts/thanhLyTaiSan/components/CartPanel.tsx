@@ -90,9 +90,13 @@ export function CartPanel(props: ICartPanelProps): React.ReactElement {
                       <strong>{formatCurrency(item.lineTotal)}</strong>
                     </div>
 
-                    <button type="button" className={styles.removeButton} onClick={() => props.onRemove(item.productCode)} disabled={isRemoving}>
+                    <AppButton
+                      variant="danger"
+                      disabled={isRemoving}
+                      onClick={() => props.onRemove(item.productCode)}
+                    >
                       Xóa
-                    </button>
+                    </AppButton>
                   </div>
                 );
               })}

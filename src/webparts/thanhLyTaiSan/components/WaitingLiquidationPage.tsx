@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Spinner, SpinnerSize } from '@fluentui/react';
 import logoMag from '../assets/logoMAG.png';
 import { AppButton, ConfirmDialog, NoticeBanner } from './common';
 import styles from './WaitingLiquidationPage.module.scss';
@@ -37,10 +36,12 @@ export function WaitingLiquidationPage(props: IWaitingLiquidationPageProps): Rea
               <path d="M12 7v5l3 2" />
             </svg>
           </div>
-          <Spinner
-            size={SpinnerSize.medium}
-            label={props.isOpeningSession ? 'Đang mở phiên thanh lý...' : 'Đang kiểm tra trạng thái phiên thanh lý...'}
-          />
+          <div className={styles.spinnerRow}>
+            <span className={styles.waitSpinner} aria-hidden="true" />
+            <span className={styles.spinnerLabel}>
+              {props.isOpeningSession ? 'Đang mở phiên thanh lý...' : 'Đang kiểm tra trạng thái phiên thanh lý...'}
+            </span>
+          </div>
         </div>
 
         {!!props.errorMessage && (

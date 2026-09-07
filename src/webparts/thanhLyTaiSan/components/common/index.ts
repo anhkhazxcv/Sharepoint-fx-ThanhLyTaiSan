@@ -13,6 +13,9 @@ export type { IStatusBadgeProps, TStatusBadgeVariant } from './StatusBadge';
 export { EmptyState } from './EmptyState';
 export type { IEmptyStateProps } from './EmptyState';
 
+export { StatCard } from './StatCard';
+export type { IStatCardProps } from './StatCard';
+
 export { NoticeBanner, DialogSection } from './NoticeBanner';
 export type { INoticeBannerProps, TNoticeBannerVariant } from './NoticeBanner';
 

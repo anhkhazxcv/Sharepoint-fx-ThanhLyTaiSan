@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AppButton } from './common';
 import { PurchaseLimitBadge } from './PurchaseLimitBadge';
 import { SearchBox } from './SearchBox';
 import type { IAssetFilters } from './types';
@@ -134,9 +135,9 @@ export function FilterBar(props: IFilterBarProps): React.ReactElement {
           onChange={(value: string) => onFilterChange('address', value)}
         />
         <div className={styles.actionArea}>
-          <button type="button" className={styles.clearButton} onClick={onClearFilters}>
+          <AppButton variant="ghost" className={styles.clearButton} onClick={onClearFilters}>
             Xóa bộ lọc
-          </button>
+          </AppButton>
         </div>
       </div>
 

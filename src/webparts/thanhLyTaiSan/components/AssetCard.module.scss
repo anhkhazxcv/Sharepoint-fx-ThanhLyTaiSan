@@ -6,9 +6,9 @@
   flex-direction: column;
   height: 100%;
   min-width: 0;
-  border: 1px solid #eadfce;
+  border: 1px solid $mag-border-default;
   border-radius: 16px;
-  background: #fffdfa;
+  background: $mag-surface-card;
   box-shadow: 0 8px 22px rgba(98, 77, 40, 0.07);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -21,7 +21,7 @@
 }
 
 .soldOutCard {
-  background: #faf7f1;
+  background: $mag-surface-muted;
 }
 
 .mediaArea {
@@ -86,6 +86,7 @@
 .imageFallbackIcon {
   width: 52px;
   height: 52px;
+  color: #c0a98a;
   opacity: 0.68;
 }
 
@@ -103,46 +104,14 @@
   backdrop-filter: grayscale(0.2);
 }
 
-.statusBadge {
+.assetStatusBadge {
   position: absolute;
   top: 12px;
   right: 12px;
   z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 28px;
   max-width: calc(100% - 24px);
-  padding: 0 10px;
-  border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.72);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1;
   box-shadow: 0 8px 18px rgba(64, 45, 19, 0.18);
-  white-space: nowrap;
-}
-
-.statusDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: currentColor;
-}
-
-.statusAvailable {
-  background: rgba(236, 253, 245, 0.96);
-  color: #047857;
-}
-
-.statusLowStock {
-  background: rgba(255, 248, 232, 0.96);
-  color: #9a5f0a;
-}
-
-.statusSoldOut {
-  background: rgba(246, 239, 226, 0.96);
-  color: #7b6750;
 }
 
 .content {
@@ -174,7 +143,7 @@
 .locationText {
   min-width: 0;
   color: #8a7355;
-  font-size: 12px;
+  font-size: $mag-font-label;
   font-weight: 700;
 }
 
@@ -182,7 +151,7 @@
   flex: 0 1 auto;
   max-width: 58%;
   padding: 4px 8px;
-  border-radius: 999px;
+  border-radius: $mag-radius-pill;
   background: #f7ebd3;
   color: #7a5528;
   font-size: 11px;
@@ -201,8 +170,8 @@
   min-height: 42px;
   margin: 0;
   overflow: hidden;
-  color: #2b2419;
-  font-size: 15px;
+  color: $mag-text-body;
+  font-size: $mag-font-body;
   font-weight: 800;
   line-height: 1.4;
   -webkit-box-orient: vertical;
@@ -211,7 +180,7 @@
 
 .assetCode {
   color: #7c6f61;
-  font-size: 12px;
+  font-size: $mag-font-label;
   line-height: 1.3;
 }
 
@@ -233,7 +202,7 @@
 
 .price {
   color: #8a6222;
-  font-size: 24px;
+  font-size: $mag-font-title-lg;
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -256,7 +225,7 @@
   gap: 6px;
   min-height: 86px;
   padding: 10px;
-  border-radius: 12px;
+  border-radius: $mag-radius-md;
   background: #fff8ed;
 }
 
@@ -281,7 +250,7 @@
 .conditionBadge {
   max-width: 58%;
   padding: 3px 8px;
-  border-radius: 999px;
+  border-radius: $mag-radius-pill;
   background: #f7ebd3;
   color: #8a6222;
   font-size: 11px;
@@ -296,7 +265,7 @@
   margin: 0;
   overflow: hidden;
   color: #3d3324;
-  font-size: 12px;
+  font-size: $mag-font-label;
   font-weight: 600;
   line-height: 1.45;
   -webkit-box-orient: vertical;
@@ -338,8 +307,8 @@
 .infoValue {
   display: block;
   margin-top: 3px;
-  color: #2b2419;
-  font-size: 12px;
+  color: $mag-text-body;
+  font-size: $mag-font-label;
   font-weight: 800;
   line-height: 1.35;
 }
@@ -351,7 +320,7 @@
   margin-top: auto;
   padding: 12px 14px 14px;
   border-top: 1px solid #eee0c8;
-  background: #fffdfa;
+  background: $mag-surface-card;
 }
 
 .purchasePanel {
@@ -373,18 +342,18 @@
   width: 100%;
   height: 38px;
   padding: 0 10px;
-  border: 1px solid #d8c9ae;
+  border: 1px solid $mag-border-input;
   border-radius: 10px;
   background: #fffefa;
-  color: #2b2419;
-  font-size: 14px;
+  color: $mag-text-body;
+  font-size: $mag-font-sm;
   font-weight: 800;
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 
   &:focus {
-    border-color: #b78a36;
-    box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+    border-color: $mag-accent-gold;
+    box-shadow: $mag-focus-ring;
   }
 
   &:disabled {
@@ -398,50 +367,15 @@
   border-color: #ef4444;
 }
 
-.actionButton {
+.actionButtonSlot {
   grid-column: 3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
   width: 100%;
-  height: 38px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 900;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.actionActive {
-  background: linear-gradient(180deg, #a97928 0%, #7b571f 100%);
-  color: #ffffff;
-  box-shadow: 0 10px 18px rgba(123, 87, 31, 0.24);
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 14px 22px rgba(123, 87, 31, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-.actionDisabled {
-  background: #eadfce;
-  color: #8a7355;
-  cursor: not-allowed;
-  box-shadow: none;
 }
 
 .helperText,
 .errorText {
   min-height: 18px;
-  font-size: 12px;
+  font-size: $mag-font-label;
   line-height: 1.4;
 }
 
@@ -470,7 +404,7 @@
   max-height: min(70vh, 520px);
   overflow: auto;
   border-radius: 18px;
-  background: #fffdfa;
+  background: $mag-surface-card;
   box-shadow: 0 24px 60px rgba(64, 45, 19, 0.24);
 }
 
@@ -480,8 +414,8 @@
   justify-content: space-between;
   gap: 16px;
   padding: 18px 20px;
-  border-bottom: 1px solid #eadfce;
-  color: #2b2419;
+  border-bottom: 1px solid $mag-border-default;
+  color: $mag-text-body;
   font-size: 17px;
 }
 
@@ -489,7 +423,7 @@
   width: 34px;
   height: 34px;
   border: 0;
-  border-radius: 999px;
+  border-radius: $mag-radius-pill;
   background: #f5efe4;
   color: #3d3324;
   cursor: pointer;

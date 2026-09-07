@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import type { SPHttpClient } from '@microsoft/sp-http';
 import { AssetLiquidationPage } from './AssetLiquidationPage';
 import { WaitingLiquidationPage } from './WaitingLiquidationPage';
 import { LoadingOverlay } from './LoadingOverlay';
 import { AppButton, ConfirmDialog, NoticeBanner } from './common';
+import type { IOrderDetail } from './orderDetail/types';
 import styles from './OrderWorkspace.module.scss';
 import {
   handleConfirmBulkHandover as runConfirmBulkHandover,
@@ -11,6 +13,7 @@ import {
   handleDeleteOrder,
   type IOrderActionsContext
 } from './workspace/orderActions';
+import { ROUTE_PATHS } from './workspace/routePaths';
 import { useWorkspaceData } from './workspace/useWorkspaceData';
 import { WorkspaceCatalogContext } from './workspace/workspaceContexts';
 import { WorkspaceSidebar } from './workspace/WorkspaceSidebar';
@@ -44,9 +47,62 @@ function LazyTabFallback(): React.ReactElement {
   return <LoadingOverlay visible message="Đang tải nội dung..." />;
 }
 
+interface IRequireAdminProps {
+  hasAdminRole: boolean;
+  isChecked: boolean;
+  children: React.ReactElement;
+}
+
+function RequireAdmin(props: IRequireAdminProps): React.ReactElement {
+  if (!props.isChecked) {
+    return <LazyTabFallback />;
+  }
+
+  if (!props.hasAdminRole) {
+    return <Navigate to={ROUTE_PATHS.orders} replace />;
+  }
+
+  return props.children;
+}
+
+interface IOrderDetailRouteProps {
+  orders: IOrderDetail[];
+  isAdmin: boolean;
+  isActionProcessing: boolean;
+  fallbackPath: string;
+  onConfirmPayment: (orderId: string) => void;
+  onConfirmHandover: (orderId: string) => void;
+}
+
+function OrderDetailRoute(props: IOrderDetailRouteProps): React.ReactElement {
+  const params = useParams<{ orderId: string }>();
+  const navigate = useNavigate();
+  const orderDetail: IOrderDetail | undefined = props.orders.filter(
+    (order: IOrderDetail) => order.orderId === params.orderId
+  )[0];
+
+  if (!orderDetail) {
+    return <Navigate to={props.fallbackPath} replace />;
+  }
+
+  return (
+    <OrderDetailPage
+      orderDetail={orderDetail}
+      isAdmin={props.isAdmin}
+      isActionProcessing={props.isActionProcessing}
+      onConfirmPayment={props.onConfirmPayment}
+      onConfirmHandover={props.onConfirmHandover}
+      onBack={(): void => {
+        navigate(props.fallbackPath);
+      }}
+    />
+  );
+}
+
 export interface IOrderWorkspaceProps {
   userDisplayName: string;
   userEmail: string;
+  userPhotoUrl?: string;
   spHttpClient: SPHttpClient;
   siteUrl: string;
   powerAutomateEmailUrl?: string;
@@ -54,6 +110,21 @@ export interface IOrderWorkspaceProps {
 
 export function OrderWorkspace(props: IOrderWorkspaceProps): React.ReactElement {
   const workspace = useWorkspaceData(props);
+  const navigate = useNavigate();
+
+  const openBuyerOrder = React.useCallback(
+    (order: IOrderDetail): void => {
+      navigate(ROUTE_PATHS.orderDetail(order.orderId));
+    },
+    [navigate]
+  );
+
+  const openAdminOrder = React.useCallback(
+    (order: IOrderDetail): void => {
+      navigate(ROUTE_PATHS.adminOrderDetail(order.orderId));
+    },
+    [navigate]
+  );
 
   const catalogContextValue = React.useMemo(
     () => ({
@@ -73,32 +144,34 @@ export function OrderWorkspace(props: IOrderWorkspaceProps): React.ReactElement 
       hasAdminRole: workspace.hasAdminRole,
       adminActionLoading: workspace.adminActionLoading,
       adminTransactionRecords: workspace.adminTransactionRecords,
-      selectedOrderId: workspace.selectedOrderId,
+      currentAdminOrderId: workspace.currentAdminOrderId,
       getOrderById: workspace.getOrderById,
       updatePaymentStatusInState: workspace.updatePaymentStatusInState,
       updateTransactionStatusInState: workspace.updateTransactionStatusInState,
       setTransactionRecords: workspace.setTransactionRecords,
       setAdminTransactionRecords: workspace.setAdminTransactionRecords,
       setAssets: workspace.setAssets,
-      setSelectedOrderId: workspace.setSelectedOrderId,
+      navigateToAdminOrderList: (): void => {
+        navigate(ROUTE_PATHS.admin);
+      },
       setAdminActionLoading: workspace.setAdminActionLoading,
       showToast: workspace.showToast
     }),
     [
+      navigate,
       props.siteUrl,
       props.spHttpClient,
       props.powerAutomateEmailUrl,
       workspace.hasAdminRole,
       workspace.adminActionLoading,
       workspace.adminTransactionRecords,
-      workspace.selectedOrderId,
+      workspace.currentAdminOrderId,
       workspace.getOrderById,
       workspace.updatePaymentStatusInState,
       workspace.updateTransactionStatusInState,
       workspace.setTransactionRecords,
       workspace.setAdminTransactionRecords,
       workspace.setAssets,
-      workspace.setSelectedOrderId,
       workspace.setAdminActionLoading,
       workspace.showToast
     ]
@@ -203,89 +276,127 @@ export function OrderWorkspace(props: IOrderWorkspaceProps): React.ReactElement 
       />
       <div className={styles.layout}>
         <WorkspaceSidebar
-          activeTab={workspace.activeTab}
           isSidebarCollapsed={workspace.isSidebarCollapsed}
           hasAdminRole={workspace.hasAdminRole}
           ordersCount={workspace.orders.length}
           adminOrdersCount={workspace.adminOrders.length}
+          userDisplayName={props.userDisplayName}
+          userEmail={props.userEmail}
+          userPhotoUrl={props.userPhotoUrl}
           onToggleCollapse={(): void => {
             workspace.setIsSidebarCollapsed((prevState: boolean) => !prevState);
           }}
-          onSelectTab={workspace.setActiveTab}
-          onShowOrderList={workspace.showOrderList}
-          onShowAdminList={workspace.showAdminList}
-          onShowAdminAssetList={workspace.showAdminAssetList}
         />
 
         <div className={styles.content}>
-          {workspace.activeTab === 'register' ? (
-            <AssetLiquidationPage
-              userDisplayName={props.userDisplayName}
-              userEmail={props.userEmail}
-              spHttpClient={props.spHttpClient}
-              siteUrl={props.siteUrl}
-              purchasedCount={workspace.purchasedCount}
-              maxOrder={workspace.maxOrder}
-              isStopSellingEnabled={workspace.isStopSellingEnabled}
-              isUserBlacklisted={workspace.isUserBlacklisted}
-              assets={workspace.assets}
-              isLoadingAssets={workspace.isLoadingAssets}
-              assetLoadError={workspace.assetLoadError}
-              cartItems={workspace.cartItems}
-              onRefreshCart={workspace.refreshCart}
-            />
-          ) : (
-            <React.Suspense fallback={<LazyTabFallback />}>
-              {workspace.activeTab === 'cart' ? (
-                <CartPage
-                  userDisplayName={props.userDisplayName}
-                  userEmail={props.userEmail}
-                  spHttpClient={props.spHttpClient}
-                  siteUrl={props.siteUrl}
-                  purchasedCount={workspace.purchasedCount}
-                  maxOrder={workspace.maxOrder}
-                  isUserBlacklisted={workspace.isUserBlacklisted}
-                  assets={workspace.assets}
-                  isLoadingAssets={workspace.isLoadingAssets}
-                  cartItems={workspace.cartItems}
-                  onRefreshCart={workspace.refreshCart}
-                  onAssetsRefresh={workspace.refreshAssets}
-                  onPurchaseSuccess={workspace.handlePurchaseSuccess}
-                />
-              ) : workspace.selectedOrder ? (
-                <OrderDetailPage
-                  orderDetail={workspace.selectedOrder}
-                  isAdmin={workspace.hasAdminRole}
-                  isActionProcessing={workspace.adminActionLoading !== undefined}
-                  onConfirmPayment={handleConfirmPayment}
-                  onConfirmHandover={handleConfirmHandover}
-                  onBack={(): void => {
-                    workspace.setSelectedOrderId(undefined);
-                  }}
-                />
-              ) : workspace.hasAdminRole && workspace.activeTab === 'assets' ? (
-                <AdminAssetMonitorPage
-                  siteUrl={props.siteUrl}
-                  spHttpClient={props.spHttpClient}
-                  assets={workspace.assets}
-                  transactions={workspace.adminTransactionRecords}
-                  onOpenOrder={workspace.openOrderDetail}
-                  onAssetsRefresh={workspace.refreshAssets}
-                />
-              ) : workspace.hasAdminRole && workspace.activeTab === 'admin' ? (
-                <AdminTransactionPage
-                  orders={workspace.adminOrders}
-                  onOpenOrder={workspace.openOrderDetail}
-                  onConfirmBulkPayment={handleConfirmBulkPayment}
-                  onConfirmBulkHandover={handleConfirmBulkHandover}
-                  onDeleteOrder={handleDeleteOrderCallback}
-                  isProcessing={workspace.adminActionLoading !== undefined}
-                />
-              ) : (
-                <OrderListPage orders={workspace.orders} onOpenOrder={workspace.openOrderDetail} />
-              )}
-            </React.Suspense>
-          )}
+          <React.Suspense fallback={<LazyTabFallback />}>
+            <Routes>
+              <Route index element={<Navigate to={ROUTE_PATHS.register} replace />} />
+              <Route
+                path={ROUTE_PATHS.register}
+                element={
+                  <AssetLiquidationPage
+                    userDisplayName={props.userDisplayName}
+                    userEmail={props.userEmail}
+                    spHttpClient={props.spHttpClient}
+                    siteUrl={props.siteUrl}
+                    purchasedCount={workspace.purchasedCount}
+                    maxOrder={workspace.maxOrder}
+                    isStopSellingEnabled={workspace.isStopSellingEnabled}
+                    isUserBlacklisted={workspace.isUserBlacklisted}
+                    assets={workspace.assets}
+                    isLoadingAssets={workspace.isLoadingAssets}
+                    assetLoadError={workspace.assetLoadError}
+                    cartItems={workspace.cartItems}
+                    onRefreshCart={workspace.refreshCart}
+                  />
+                }
+              />
+              <Route
+                path={ROUTE_PATHS.cart}
+                element={
+                  <CartPage
+                    userDisplayName={props.userDisplayName}
+                    userEmail={props.userEmail}
+                    spHttpClient={props.spHttpClient}
+                    siteUrl={props.siteUrl}
+                    purchasedCount={workspace.purchasedCount}
+                    maxOrder={workspace.maxOrder}
+                    isUserBlacklisted={workspace.isUserBlacklisted}
+                    assets={workspace.assets}
+                    isLoadingAssets={workspace.isLoadingAssets}
+                    cartItems={workspace.cartItems}
+                    onRefreshCart={workspace.refreshCart}
+                    onAssetsRefresh={workspace.refreshAssets}
+                    onPurchaseSuccess={workspace.handlePurchaseSuccess}
+                  />
+                }
+              />
+              <Route
+                path={ROUTE_PATHS.orders}
+                element={<OrderListPage orders={workspace.orders} onOpenOrder={openBuyerOrder} />}
+              />
+              <Route
+                path={ROUTE_PATHS.orderDetailPattern}
+                element={
+                  <OrderDetailRoute
+                    orders={workspace.orders}
+                    isAdmin={workspace.hasAdminRole}
+                    isActionProcessing={workspace.adminActionLoading !== undefined}
+                    fallbackPath={ROUTE_PATHS.orders}
+                    onConfirmPayment={handleConfirmPayment}
+                    onConfirmHandover={handleConfirmHandover}
+                  />
+                }
+              />
+              <Route
+                path={ROUTE_PATHS.adminAssets}
+                element={
+                  <RequireAdmin hasAdminRole={workspace.hasAdminRole} isChecked={workspace.isAdminRoleChecked}>
+                    <AdminAssetMonitorPage
+                      siteUrl={props.siteUrl}
+                      spHttpClient={props.spHttpClient}
+                      assets={workspace.assets}
+                      transactions={workspace.adminTransactionRecords}
+                      onOpenOrder={openAdminOrder}
+                      onAssetsRefresh={workspace.refreshAssets}
+                    />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path={ROUTE_PATHS.admin}
+                element={
+                  <RequireAdmin hasAdminRole={workspace.hasAdminRole} isChecked={workspace.isAdminRoleChecked}>
+                    <AdminTransactionPage
+                      orders={workspace.adminOrders}
+                      onOpenOrder={openAdminOrder}
+                      onConfirmBulkPayment={handleConfirmBulkPayment}
+                      onConfirmBulkHandover={handleConfirmBulkHandover}
+                      onDeleteOrder={handleDeleteOrderCallback}
+                      isProcessing={workspace.adminActionLoading !== undefined}
+                    />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path={ROUTE_PATHS.adminOrderDetailPattern}
+                element={
+                  <RequireAdmin hasAdminRole={workspace.hasAdminRole} isChecked={workspace.isAdminRoleChecked}>
+                    <OrderDetailRoute
+                      orders={workspace.adminOrders}
+                      isAdmin={workspace.hasAdminRole}
+                      isActionProcessing={workspace.adminActionLoading !== undefined}
+                      fallbackPath={ROUTE_PATHS.admin}
+                      onConfirmPayment={handleConfirmPayment}
+                      onConfirmHandover={handleConfirmHandover}
+                    />
+                  </RequireAdmin>
+                }
+              />
+              <Route path="*" element={<Navigate to={ROUTE_PATHS.register} replace />} />
+            </Routes>
+          </React.Suspense>
         </div>
       </div>
       <ConfirmDialog

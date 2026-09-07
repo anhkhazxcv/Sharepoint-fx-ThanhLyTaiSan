@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FiAlertTriangle, FiClipboard, FiLock } from 'react-icons/fi';
 import type { IOrderItem } from './types';
 import { formatCurrency } from './utils/format';
 import { buildVietQrImageUrl, DEFAULT_QR_BANK_SLUG } from '../services/bankInfoService';
@@ -88,7 +89,7 @@ export function PaymentManagementTable(props: IPaymentManagementTableProps): Rea
   if (!props.items.length) {
     return (
       <div className={styles.emptyState}>
-        <span className={styles.emptyIcon}>📋</span>
+        <FiClipboard className={styles.emptyIcon} aria-hidden="true" />
         <strong>Chưa có tài sản trong đơn hàng</strong>
         <span>Dữ liệu sẽ hiển thị tại đây khi đơn hàng được tạo.</span>
       </div>
@@ -160,7 +161,7 @@ export function PaymentManagementTable(props: IPaymentManagementTableProps): Rea
                               </div>
                             ) : (
                               <div className={styles.adminError}>
-                                <span className={styles.adminErrorIcon}>⚠️</span>
+                                <FiAlertTriangle className={styles.adminErrorIcon} aria-hidden="true" />
                                 <span className={styles.adminErrorTitle}>Chưa có thông tin thanh toán</span>
                                 <span className={styles.adminErrorMsg}>Vui lòng liên hệ admin để cấu hình tài khoản cho pháp nhân <strong>{group.legalEntity || 'này'}</strong>.</span>
                               </div>
@@ -187,7 +188,7 @@ export function PaymentManagementTable(props: IPaymentManagementTableProps): Rea
                                 />
                               ) : (
                                 <div className={styles.qrAdminError}>
-                                  <span className={styles.qrAdminErrorIcon}>🔒</span>
+                                  <FiLock className={styles.qrAdminErrorIcon} aria-hidden="true" />
                                   <span className={styles.qrAdminErrorMsg}>Không thể tạo mã QR</span>
                                   <span className={styles.qrAdminErrorSub}>Vui lòng liên hệ admin</span>
                                 </div>

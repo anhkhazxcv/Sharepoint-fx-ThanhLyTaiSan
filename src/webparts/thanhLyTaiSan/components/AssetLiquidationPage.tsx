@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { SPHttpClient } from '@microsoft/sp-http';
 import { AssetGrid } from './AssetGrid';
 import { FilterBar } from './FilterBar';
-import { NoticeBanner, PaginationBar } from './common';
+import { NoticeBanner, PaginationBar, StatCard } from './common';
 import type { IAssetFilters, IAssetItem, ICartItem } from './types';
 import { upsertCartItem } from './services/cartService';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -459,48 +459,25 @@ export function AssetLiquidationPage(props: IAssetLiquidationPageProps): React.R
         <div className={styles.heroContent}>
           <div className={styles.heroEyebrow}>Nền tảng thanh lý tài sản nội bộ</div>
           <h1 className={styles.pageTitle}>Đăng ký mua tài sản dành cho cán bộ nhân viên</h1>
-          <p className={styles.heroDescription}>
-            Tìm kiếm tài sản phù hợp, theo dõi số lượng hiện có theo thời gian thực và tạo yêu cầu mua nhanh trong cùng một giao diện.
-          </p>
-
           <div className={styles.heroActions}>
             <span className={styles.primaryChip}>Đang mở bán: {availableAssetCount} tài sản</span>
             <span className={styles.secondaryChip}>Giỏ hàng hiện có: {cartQuantity} sản phẩm</span>
           </div>
         </div>
-
-        <div className={styles.userPanel}>
-          <div className={styles.userPanelLabel}>Tài khoản đang thao tác</div>
-          <div className={styles.userIdentity}>
-            <div className={styles.avatar} aria-hidden="true">
-              {displayName.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <div className={styles.userName}>{displayName}</div>
-              <div className={styles.userEmail}>{props.userEmail}</div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section className={styles.statsGrid}>
-        <article className={styles.statCard}>
-          <span className={styles.statLabel}>Tài sản đang hiển thị</span>
-          <strong className={styles.statValue}>{visibleAssets.length}</strong>
-          <span className={styles.statMeta}>Tổng nguồn dữ liệu hiện có {assets.length} tài sản</span>
-        </article>
-
-        <article className={styles.statCard}>
-          <span className={styles.statLabel}>Giới hạn còn lại</span>
-          <strong className={styles.statValue}>{remainingLimit}</strong>
-          <span className={styles.statMeta}>Đã mua {props.purchasedCount}/{purchaseLimit} tài sản</span>
-        </article>
-
-        <article className={styles.statCard}>
-          <span className={styles.statLabel}>Giỏ hàng hiện tại</span>
-          <strong className={styles.statValue}>{cartQuantity}</strong>
-          <span className={styles.statMeta}>Số lượng sản phẩm đang được chọn mua</span>
-        </article>
+        <StatCard
+          label="Tài sản đang hiển thị"
+          value={visibleAssets.length}
+          meta={`Tổng nguồn dữ liệu hiện có ${assets.length} tài sản`}
+        />
+        <StatCard
+          label="Giới hạn còn lại"
+          value={remainingLimit}
+          meta={`Đã mua ${props.purchasedCount}/${purchaseLimit} tài sản`}
+        />
+        <StatCard label="Giỏ hàng hiện tại" value={cartQuantity} meta="Số lượng sản phẩm đang được chọn mua" />
       </section>
 
       <FilterBar

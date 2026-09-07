@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { FiImage } from 'react-icons/fi';
 import type { IAssetItem } from './types';
 import { formatCurrency } from './utils/format';
+import { AppButton, StatusBadge, type TStatusBadgeVariant } from './common';
 import styles from './AssetCard.module.scss';
 
 export interface IAssetCardProps {
@@ -48,6 +50,18 @@ function getStatusLabel(asset: IAssetItem): string {
   return asset.statusText || 'Còn hàng';
 }
 
+function mapAssetStatusVariant(statusVariant: 'soldOut' | 'available' | 'lowStock'): TStatusBadgeVariant {
+  if (statusVariant === 'soldOut') {
+    return 'neutral';
+  }
+
+  if (statusVariant === 'lowStock') {
+    return 'warning';
+  }
+
+  return 'success';
+}
+
 function getShortConditionLabel(condition: string): string {
   const normalizedCondition: string = condition.trim().toLowerCase();
 
@@ -82,27 +96,6 @@ function truncateText(value: string, maxLength: number): string {
   }
 
   return trimmedValue.slice(0, maxLength).trim() + '...';
-}
-
-interface IStatusBadgeProps {
-  asset: IAssetItem;
-}
-
-function StatusBadge(props: IStatusBadgeProps): React.ReactElement {
-  const statusVariant: 'soldOut' | 'available' | 'lowStock' = getStatusVariant(props.asset);
-  const variantClassName: string =
-    statusVariant === 'soldOut'
-      ? styles.statusSoldOut
-      : statusVariant === 'lowStock'
-        ? styles.statusLowStock
-        : styles.statusAvailable;
-
-  return (
-    <div className={`${styles.statusBadge} ${variantClassName}`}>
-      <span className={styles.statusDot} aria-hidden="true" />
-      {getStatusLabel(props.asset)}
-    </div>
-  );
 }
 
 interface IConditionPreviewProps {
@@ -233,9 +226,9 @@ function QuantitySelector(props: IQuantitySelectorProps): React.ReactElement {
           />
         </label>
 
-        <button
-          type="button"
-          className={`${styles.actionButton} ${props.isActionDisabled ? styles.actionDisabled : styles.actionActive}`}
+        <AppButton
+          variant="primary"
+          className={styles.actionButtonSlot}
           disabled={props.isActionDisabled}
           onClick={() => props.onAddToCart(props.asset)}
         >
@@ -247,7 +240,7 @@ function QuantitySelector(props: IQuantitySelectorProps): React.ReactElement {
           ) : (
             'Đăng ký mua'
           )}
-        </button>
+        </AppButton>
       </div>
 
       {props.isSoldOut ? (
@@ -296,12 +289,7 @@ function AssetCardComponent(props: IAssetCardProps): React.ReactElement {
         <div className={styles.imageFrame}>
           {!hasImage || isImageBroken ? (
             <div className={styles.imageFallback}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className={styles.imageFallbackIcon} aria-label="Không có ảnh">
-                <rect width="64" height="64" rx="8" fill="#f0ebe3" />
-                <path d="M12 44 L24 28 L32 38 L40 30 L52 44 Z" fill="#d9cfc5" />
-                <circle cx="42" cy="22" r="5" fill="#d9cfc5" />
-                <line x1="8" y1="8" x2="56" y2="56" stroke="#c0a98a" strokeWidth="3" strokeLinecap="round" />
-              </svg>
+              <FiImage className={styles.imageFallbackIcon} aria-label="Không có ảnh" />
               <span className={styles.imageFallbackText}>Không có ảnh</span>
             </div>
           ) : (
@@ -321,7 +309,12 @@ function AssetCardComponent(props: IAssetCardProps): React.ReactElement {
         </div>
 
         {isSoldOut && <div className={styles.soldOutOverlay} aria-hidden="true" />}
-        <StatusBadge asset={asset} />
+        <StatusBadge
+          dot
+          label={getStatusLabel(asset)}
+          variant={mapAssetStatusVariant(statusVariant)}
+          className={styles.assetStatusBadge}
+        />
       </div>
 
       <div className={styles.content}>

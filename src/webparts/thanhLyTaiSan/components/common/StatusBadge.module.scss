@@ -3,12 +3,20 @@
 .badge {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   min-height: 32px;
   padding: 0 12px;
   border-radius: $mag-radius-pill;
   font-size: $mag-font-label;
   font-weight: $mag-weight-bold;
   white-space: nowrap;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: $mag-radius-pill;
+  background: currentColor;
 }
 
 .success {

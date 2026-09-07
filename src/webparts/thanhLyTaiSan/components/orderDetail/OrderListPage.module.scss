@@ -26,24 +26,6 @@
   box-shadow: 0 16px 30px rgba(67, 46, 23, 0.07);
 }
 
-.header {
-  margin-bottom: 20px;
-}
-
-.title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 800;
-  color: #6a4a1d;
-}
-
-.subtitle {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
-  color: #736557;
-}
-
 .desktopTable {
   display: block;
 }
@@ -57,48 +39,9 @@
   color: #7b571f;
 }
 
-.statusBadge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.badgeSuccess {
-  background: #e9f5eb;
-  color: #2e7d32;
-}
-
-.badgeWarning {
-  background: #fff1df;
-  color: #d9822b;
-}
-
-.badgeNeutral {
-  background: #f0ebe4;
-  color: #82694c;
-}
-
-.linkButton {
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid #dccfb9;
-  border-radius: 12px;
-  background: #fffdfa;
-  color: #7b571f;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
 .mobileCard {
   padding: 16px;
-  border: 1px solid #eadfce;
+  border: 1px solid $mag-border-default;
   border-radius: 18px;
   background: #fffaf4;
 }
@@ -121,24 +64,24 @@
 }
 
 .mobileLabel {
-  color: #736557;
-  font-size: 12px;
+  color: $mag-text-muted;
+  font-size: $mag-font-label;
   font-weight: 700;
 }
 
 .emptyState {
   margin: 24px;
   min-height: 240px;
-  border: 1px dashed #d8c9ae;
+  border: 1px dashed $mag-border-input;
   border-radius: 24px;
-  background: #faf7f1;
+  background: $mag-surface-muted;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 24px;
-  color: #736557;
+  color: $mag-text-muted;
   text-align: center;
 }
 
@@ -151,10 +94,6 @@
   .card {
     padding: 18px;
     border-radius: 20px;
-  }
-
-  .title {
-    font-size: 24px;
   }
 
   .desktopTable {

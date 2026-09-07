@@ -1,19 +1,19 @@
-@import '../../../styles/liquidation-theme';
+@import '../../styles/liquidation-theme';
 
-.filterPanel {
+.dateRangeRow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-.filterField {
+.dateField {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.filterLabel {
+.dateLabel {
   font-size: $mag-font-label;
   font-weight: $mag-weight-bold;
   color: $mag-text-label;
@@ -21,8 +21,7 @@
   letter-spacing: 0.06em;
 }
 
-.input,
-.select {
+.dateInput {
   height: 42px;
   padding: 0 14px;
   border: 1px solid $mag-border-input;
@@ -37,8 +36,8 @@
   }
 }
 
-@media (max-width: 900px) {
-  .filterPanel {
+@media (max-width: 480px) {
+  .dateRangeRow {
     grid-template-columns: 1fr;
   }
 }

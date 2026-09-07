@@ -4,17 +4,24 @@
   padding: 24px;
 }
 
-.loadingState,
-.errorState {
-  padding: 24px;
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
   border: 1px dashed $mag-border-input;
   border-radius: $mag-radius-md;
   background: $mag-surface-card;
   color: #6f6457;
+  text-align: center;
 }
 
-.errorState {
-  color: $mag-status-error-text;
+.loadingImage {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
 }
 
 @media (max-width: 900px) {

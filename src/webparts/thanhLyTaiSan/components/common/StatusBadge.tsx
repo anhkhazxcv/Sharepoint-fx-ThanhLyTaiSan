@@ -6,6 +6,7 @@ export type TStatusBadgeVariant = 'success' | 'warning' | 'neutral' | 'danger';
 export interface IStatusBadgeProps {
   label: string;
   variant?: TStatusBadgeVariant;
+  dot?: boolean;
   className?: string;
 }
 
@@ -13,7 +14,12 @@ export function StatusBadge(props: IStatusBadgeProps): React.ReactElement {
   const variant: TStatusBadgeVariant = props.variant || 'neutral';
   const classNames: string = [styles.badge, styles[variant], props.className || ''].filter(Boolean).join(' ');
 
-  return <span className={classNames}>{props.label}</span>;
+  return (
+    <span className={classNames}>
+      {props.dot && <span className={styles.dot} aria-hidden="true" />}
+      {props.label}
+    </span>
+  );
 }
 
 export function getStatusBadgeVariantFromOrderStatus(

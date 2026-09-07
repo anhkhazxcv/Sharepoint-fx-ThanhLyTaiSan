@@ -11,8 +11,7 @@
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.9fr);
+  display: flex;
   gap: 24px;
   padding: 32px;
   border: 1px solid #e6ded2;
@@ -26,6 +25,7 @@
 
 .heroContent {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 16px;
   min-width: 0;
@@ -84,64 +84,6 @@
   border: 1px solid rgba(255, 242, 221, 0.2);
 }
 
-.userPanel {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: start;
-  gap: 14px;
-  padding: 24px;
-  border-radius: 20px;
-  background: rgba(255, 250, 244, 0.08);
-  border: 1px solid rgba(255, 244, 224, 0.14);
-  backdrop-filter: blur(10px);
-}
-
-.userPanelLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 244, 224, 0.68);
-}
-
-.userIdentity {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(255, 250, 244, 0.08);
-  border: 1px solid rgba(255, 244, 224, 0.12);
-}
-
-.avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  background: #f4e1bf;
-  color: #6a4a1d;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: 800;
-  box-shadow: 0 8px 18px rgba(24, 16, 6, 0.16);
-}
-
-.userName {
-  font-size: 18px;
-  font-weight: 700;
-  color: #fffaf3;
-}
-
-.userEmail {
-  margin-top: 4px;
-  font-size: 14px;
-  color: rgba(255, 248, 239, 0.74);
-  word-break: break-word;
-}
-
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -149,37 +91,6 @@
   margin-top: 20px;
 }
 
-.statCard {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 22px;
-  border-radius: 20px;
-  border: 1px solid #eadfce;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 12px 26px rgba(98, 77, 40, 0.07);
-}
-
-.statLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #8b7358;
-}
-
-.statValue {
-  font-size: 34px;
-  line-height: 1;
-  font-weight: 800;
-  color: #2b2419;
-}
-
-.statMeta {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #70614f;
-}
 
 .contentArea {
   display: flex;
@@ -312,10 +223,6 @@
 }
 
 @media (max-width: 1200px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
   .statsGrid {
     grid-template-columns: 1fr;
   }
@@ -358,26 +265,9 @@
     font-size: 15px;
   }
 
-  .userIdentity {
-    align-items: flex-start;
-    padding: 14px;
-  }
-
-  .avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    font-size: 18px;
-  }
-
-  .statCard,
   .contentArea,
   .paginationBar {
     border-radius: 18px;
-  }
-
-  .statValue {
-    font-size: 30px;
   }
 
   .pageNavigation {

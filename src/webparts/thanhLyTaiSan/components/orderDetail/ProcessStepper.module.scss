@@ -1,9 +1,9 @@
 @import '../../styles/liquidation-theme';
 
 .stepperCard {
-  background: #fffdfa;
-  border: 1px solid #eadfce;
-  border-radius: 12px;
+  background: $mag-surface-card;
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-md;
   box-shadow: 0 8px 20px rgba(98, 77, 40, 0.06);
   padding: 20px 24px;
 }
@@ -33,25 +33,31 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 2px solid #d8c9ae;
-  background: #fffdfa;
+  border: 2px solid $mag-border-input;
+  background: $mag-surface-card;
   color: #8b7358;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: $mag-font-meta;
   font-weight: 700;
 }
 
-.stepDone,
-.stepActive {
+.stepDone {
   border-color: #8a6222;
   background: #8a6222;
   color: #ffffff;
 }
 
+.stepActive {
+  border-color: $mag-accent-gold;
+  border-width: 2px;
+  background: $mag-surface-card;
+  color: $mag-accent-dark;
+}
+
 .stepLabel {
-  font-size: 13px;
+  font-size: $mag-font-meta;
   font-weight: 600;
   color: #6f6457;
   text-align: center;
@@ -60,7 +66,7 @@
 .stepLine {
   flex: 1;
   height: 2px;
-  background: #eadfce;
+  background: $mag-border-default;
   margin: 0 12px;
 }
 

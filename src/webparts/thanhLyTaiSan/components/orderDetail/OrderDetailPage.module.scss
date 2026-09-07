@@ -1,3 +1,5 @@
+@import '../../styles/liquidation-theme';
+
 .page {
   padding: 24px;
   color: #3b3326;
@@ -8,24 +10,11 @@
   margin-bottom: 16px;
 }
 
-.backButton {
-  margin-bottom: 10px;
-  min-height: 34px;
-  padding: 0 14px;
-  border: 1px solid #d8c9ae;
-  border-radius: 6px;
-  background: #fffdfa;
-  color: #7b571f;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
 .title {
   margin: 0;
-  font-size: 28px;
+  font-size: $mag-font-title-xl;
   font-weight: 600;
-  color: #6a4a1d;
+  color: $mag-text-title;
 }
 
 .toolbarRow {
@@ -41,7 +30,7 @@
 .skeletonSummary,
 .skeletonMain,
 .skeletonSide {
-  border-radius: 12px;
+  border-radius: $mag-radius-md;
   background: linear-gradient(90deg, #f3ede2 0%, #fbfaf7 50%, #f3ede2 100%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite linear;
@@ -98,7 +87,7 @@
   }
 
   .title {
-    font-size: 24px;
+    font-size: $mag-font-title-lg;
     line-height: 1.3;
   }
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { SPHttpClient } from '@microsoft/sp-http';
+import loadingMAG from '../assets/loadingMAG.gif';
 import { CartPanel } from './CartPanel';
 import { ConfirmDialog, DialogSection, NoticeBanner, PageHeader } from './common';
 import type { IAssetItem, ICartItem } from './types';
@@ -300,7 +301,10 @@ export function CartPage(props: ICartPageProps): React.ReactElement {
       )}
 
       {isLoading ? (
-        <div className={styles.loadingState}>Đang tải giỏ hàng...</div>
+        <div className={styles.loadingState}>
+          <img src={loadingMAG} alt="" className={styles.loadingImage} />
+          <span>Đang tải giỏ hàng...</span>
+        </div>
       ) : (
         <CartPanel
           items={cartItems}

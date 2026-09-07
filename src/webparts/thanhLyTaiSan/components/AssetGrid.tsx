@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AssetCard } from './AssetCard';
+import { EmptyState } from './common';
 import type { IAssetItem } from './types';
 import styles from './AssetGrid.module.scss';
 
@@ -19,10 +20,10 @@ export function AssetGrid(props: IAssetGridProps): React.ReactElement {
 
   if (!assets.length) {
     return (
-      <div className={styles.emptyState}>
-        <strong>Không tìm thấy tài sản phù hợp</strong>
-        <span>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem thêm kết quả phù hợp hơn.</span>
-      </div>
+      <EmptyState
+        title="Không tìm thấy tài sản phù hợp"
+        description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem thêm kết quả phù hợp hơn."
+      />
     );
   }
 

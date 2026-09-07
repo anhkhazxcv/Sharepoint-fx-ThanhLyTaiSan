@@ -31,6 +31,7 @@ import {
   EmptyState,
   PageHeader,
   PaginationBar,
+  StatCard,
   StatusBadge,
   type IDataTableColumn,
   type IDataTableSortState
@@ -369,7 +370,7 @@ export function AdminAssetMonitorPage(props: IAdminAssetMonitorPageProps): React
 
   const importButton: React.ReactElement = (
     <AppButton variant="secondary" onClick={(): void => setIsImportDialogOpen(true)}>
-      Import Excel
+      Import sản phẩm
     </AppButton>
   );
 
@@ -404,26 +405,11 @@ export function AdminAssetMonitorPage(props: IAdminAssetMonitorPageProps): React
       />
 
       <div className={styles.kpiGrid}>
-        <article className={styles.kpiCard}>
-          <span>Tổng mã tài sản</span>
-          <strong>{kpi.totalCount}</strong>
-        </article>
-        <article className={styles.kpiCard}>
-          <span>Còn hàng</span>
-          <strong>{kpi.availableCount}</strong>
-        </article>
-        <article className={styles.kpiCard}>
-          <span>Sắp hết</span>
-          <strong>{kpi.lowStockCount}</strong>
-        </article>
-        <article className={styles.kpiCard}>
-          <span>Hết hàng</span>
-          <strong>{kpi.soldOutCount}</strong>
-        </article>
-        <article className={styles.kpiCard}>
-          <span>Giá trị tồn còn lại</span>
-          <strong>{formatCurrency(kpi.remainingInventoryValue)}</strong>
-        </article>
+        <StatCard label="Tổng mã tài sản" value={kpi.totalCount} />
+        <StatCard label="Còn hàng" value={kpi.availableCount} />
+        <StatCard label="Sắp hết" value={kpi.lowStockCount} />
+        <StatCard label="Hết hàng" value={kpi.soldOutCount} />
+        <StatCard label="Giá trị tồn còn lại" value={formatCurrency(kpi.remainingInventoryValue)} />
       </div>
 
       <div className={styles.filterPanel}>

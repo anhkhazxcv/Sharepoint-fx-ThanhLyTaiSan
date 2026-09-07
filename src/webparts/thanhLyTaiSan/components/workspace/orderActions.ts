@@ -24,14 +24,14 @@ export interface IOrderActionsContext {
   hasAdminRole: boolean;
   adminActionLoading: TAdminActionLoading;
   adminTransactionRecords: IUserTransactionRecord[];
-  selectedOrderId: string | undefined;
+  currentAdminOrderId: string | undefined;
   getOrderById: (orderId: string) => IOrderDetail | undefined;
   updatePaymentStatusInState: (orderId: string, paymentStatus: string) => void;
   updateTransactionStatusInState: (orderId: string, status: string) => void;
   setTransactionRecords: Dispatch<SetStateAction<IUserTransactionRecord[]>>;
   setAdminTransactionRecords: Dispatch<SetStateAction<IUserTransactionRecord[]>>;
   setAssets: Dispatch<SetStateAction<IAssetItem[]>>;
-  setSelectedOrderId: Dispatch<SetStateAction<string | undefined>>;
+  navigateToAdminOrderList: () => void;
   setAdminActionLoading: Dispatch<SetStateAction<TAdminActionLoading>>;
   showToast: (message: string, variant?: TToastVariant) => void;
 }
@@ -287,8 +287,8 @@ export function handleDeleteOrder(ctx: IOrderActionsContext, orderId: string): P
         return applyRestockToAssetState(prevAssets, targetRecord.items);
       });
 
-      if (ctx.selectedOrderId === orderId) {
-        ctx.setSelectedOrderId(undefined);
+      if (ctx.currentAdminOrderId === orderId) {
+        ctx.navigateToAdminOrderList();
       }
 
       ctx.showToast('Xóa đơn hàng thành công.', 'success');

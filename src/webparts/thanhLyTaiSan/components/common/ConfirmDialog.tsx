@@ -21,8 +21,13 @@ export interface IConfirmDialogProps {
   secondaryAction?: IConfirmDialogAction;
 }
 
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.prototype.slice.call(container.querySelectorAll('button:not(:disabled), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+}
+
 export function ConfirmDialog(props: IConfirmDialogProps): React.ReactElement {
   const titleId: string = props.titleId || 'mag-confirm-dialog-title';
+  const cardRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (!props.isOpen || props.isBlocking) {
@@ -39,6 +44,44 @@ export function ConfirmDialog(props: IConfirmDialogProps): React.ReactElement {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [props.isBlocking, props.isOpen, props.onDismiss]);
 
+  React.useEffect(() => {
+    if (!props.isOpen || !cardRef.current) {
+      return;
+    }
+
+    const focusableElements: HTMLElement[] = getFocusableElements(cardRef.current);
+
+    if (focusableElements.length) {
+      focusableElements[0].focus();
+    }
+
+    const handleTabKeyDown = (event: KeyboardEvent): void => {
+      if (event.key !== 'Tab' || !cardRef.current) {
+        return;
+      }
+
+      const elements: HTMLElement[] = getFocusableElements(cardRef.current);
+
+      if (!elements.length) {
+        return;
+      }
+
+      const firstElement: HTMLElement = elements[0];
+      const lastElement: HTMLElement = elements[elements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleTabKeyDown);
+    return () => window.removeEventListener('keydown', handleTabKeyDown);
+  }, [props.isOpen]);
+
   if (!props.isOpen) {
     return <></>;
   }
@@ -52,6 +95,7 @@ export function ConfirmDialog(props: IConfirmDialogProps): React.ReactElement {
   return (
     <div className={styles.overlay} role="presentation" onClick={handleOverlayClick}>
       <div
+        ref={cardRef}
         className={styles.card}
         role="dialog"
         aria-modal="true"

@@ -7,6 +7,8 @@ import {
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { MSGraphClientV3 } from '@microsoft/sp-http';
+import { ResponseType } from '@microsoft/microsoft-graph-client';
 
 import * as strings from 'ThanhLyTaiSanWebPartStrings';
 import ThanhLyTaiSan from './components/ThanhLyTaiSan';
@@ -24,6 +26,7 @@ export default class ThanhLyTaiSanWebPart extends BaseClientSideWebPart<IThanhLy
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
+  private _userPhotoUrl: string = '';
 
   public render(): void {
     const element: React.ReactElement<IThanhLyTaiSanProps> = React.createElement(
@@ -35,6 +38,7 @@ export default class ThanhLyTaiSanWebPart extends BaseClientSideWebPart<IThanhLy
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
         userEmail: this.context.pageContext.user.email,
+        userPhotoUrl: this._userPhotoUrl,
         spHttpClient: this.context.spHttpClient,
         siteUrl: this.properties.siteUrl || DEFAULT_SITE_URL,
         powerAutomateEmailUrl: this.properties.powerAutomateEmailUrl || ''
@@ -49,6 +53,8 @@ export default class ThanhLyTaiSanWebPart extends BaseClientSideWebPart<IThanhLy
       this.properties.siteUrl = DEFAULT_SITE_URL;
     }
 
+    this._loadUserPhoto();
+
     return this._getEnvironmentMessage()
       .then(message => {
         this._environmentMessage = message;
@@ -56,7 +62,20 @@ export default class ThanhLyTaiSanWebPart extends BaseClientSideWebPart<IThanhLy
       .then(() => undefined);
   }
 
-
+  private _loadUserPhoto(): void {
+    this.context.msGraphClientFactory.getClient('3')
+      .then((client: MSGraphClientV3) => client.api('/me/photo/$value').responseType(ResponseType.BLOB).get())
+      .then((blob: Blob) => new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (): void => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      }))
+      .then((dataUrl: string) => {
+        this._userPhotoUrl = dataUrl;
+        this.render();
+      })
+      .catch(() => undefined);
+  }
 
   private _getEnvironmentMessage(): Promise<string> {
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook

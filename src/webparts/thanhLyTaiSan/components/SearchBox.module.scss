@@ -14,8 +14,8 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus-within {
-    border-color: #b78a36;
-    box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+    border-color: $mag-accent-gold;
+    box-shadow: $mag-focus-ring;
   }
 }
 

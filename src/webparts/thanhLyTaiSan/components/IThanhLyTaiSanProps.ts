@@ -7,6 +7,7 @@ export interface IThanhLyTaiSanProps {
   hasTeamsContext: boolean;
   userDisplayName: string;
   userEmail: string;
+  userPhotoUrl?: string;
   spHttpClient: SPHttpClient;
   siteUrl: string;
   powerAutomateEmailUrl?: string;

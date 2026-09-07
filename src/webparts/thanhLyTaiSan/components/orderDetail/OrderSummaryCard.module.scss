@@ -1,11 +1,13 @@
+@import '../../styles/liquidation-theme';
+
 .card {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   padding: 20px 22px;
-  background: #fffdfa;
-  border: 1px solid #eadfce;
-  border-radius: 12px;
+  background: $mag-surface-card;
+  border: 1px solid $mag-border-default;
+  border-radius: $mag-radius-md;
   box-shadow: 0 8px 20px rgba(98, 77, 40, 0.06);
   margin-bottom: 20px;
 }
@@ -18,20 +20,20 @@
   display: block;
   margin-bottom: 8px;
   color: #8b7358;
-  font-size: 13px;
+  font-size: $mag-font-meta;
   font-weight: 600;
 }
 
 .value,
 .valueAccent {
   display: block;
-  color: #2b2419;
+  color: $mag-text-body;
   font-size: 18px;
   font-weight: 700;
 }
 
 .valueAccent {
-  color: #7b571f;
+  color: $mag-text-accent;
 }
 
 @media (max-width: 768px) {

@@ -3,10 +3,16 @@
   "solution": {
     "name": "MAG-thanh-ly-tai-san-client-side-solution",
     "id": "747f52a5-f25c-433f-9dcf-521a522375ca",
-    "version": "1.0.0.2",
+    "version": "1.0.0.3",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read"
+      }
+    ],
     "developer": {
       "name": "",
       "websiteUrl": "",

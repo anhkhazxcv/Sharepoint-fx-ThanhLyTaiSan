@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './ToastProvider.module.scss';
 
-export type TToastVariant = 'success' | 'error' | 'info';
+export type TToastVariant = 'success' | 'error' | 'info' | 'warning';
 
 export interface IToastContextValue {
   showToast: (message: string, variant?: TToastVariant) => void;
@@ -26,6 +26,11 @@ export function ToastProvider(props: IToastProviderProps): React.ReactElement {
 
     if (variant === 'error') {
       toast.error(message);
+      return;
+    }
+
+    if (variant === 'warning') {
+      toast.warning(message);
       return;
     }
 

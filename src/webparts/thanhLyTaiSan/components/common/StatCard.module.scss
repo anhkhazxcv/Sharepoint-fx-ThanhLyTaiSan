@@ -1,0 +1,34 @@
+@import '../../styles/liquidation-theme';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border-radius: $mag-radius-md;
+  border: 1px solid $mag-border-default;
+  background: $mag-surface-card;
+  box-shadow: $mag-shadow-card;
+  min-width: 0;
+}
+
+.label {
+  font-size: $mag-font-label;
+  font-weight: $mag-weight-bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mag-text-label;
+}
+
+.value {
+  font-size: $mag-font-title-lg;
+  font-weight: $mag-weight-bold;
+  line-height: 1.2;
+  color: $mag-text-title;
+}
+
+.meta {
+  font-size: $mag-font-meta;
+  line-height: 1.5;
+  color: $mag-text-muted;
+}

@@ -24,7 +24,7 @@
       &:focus,
       &:focus-visible {
         border-color: $mag-accent-gold;
-        box-shadow: 0 0 0 3px rgba(183, 138, 54, 0.16);
+        box-shadow: $mag-focus-ring;
       }
     }
 

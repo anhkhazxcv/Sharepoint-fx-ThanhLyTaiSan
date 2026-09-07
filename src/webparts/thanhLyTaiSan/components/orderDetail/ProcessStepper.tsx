@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FiCheck } from 'react-icons/fi';
 import type { TProcessStep } from './types';
 import styles from './ProcessStepper.module.scss';
 
@@ -30,7 +31,7 @@ export function ProcessStepper(props: IProcessStepperProps): React.ReactElement 
                     (isActive ? styles.stepActive : '')
                   }
                 >
-                  {index + 1}
+                  {isDone ? <FiCheck size={16} aria-hidden="true" /> : index + 1}
                 </span>
                 <span className={styles.stepLabel}>{step}</span>
               </div>

@@ -6,51 +6,8 @@
   margin-bottom: 16px;
 }
 
-.secondaryButton,
-.successButton {
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-
-  &:disabled {
-    background: #eadfce;
-    border-color: #d8c9ae;
-    color: #8a7355;
-    cursor: not-allowed;
-  }
-}
-
-.secondaryButton {
-  background: #fffdfa;
-  border-color: #d8c9ae;
-  color: #7b571f;
-}
-
-.successButton {
-  background: #1f8f4d;
-  color: #ffffff;
-}
-
 @media (max-width: 768px) {
   .toolbar {
     gap: 8px;
-  }
-
-  .secondaryButton,
-  .successButton {
-    flex: 1 1 calc(50% - 4px);
-  }
-}
-
-@media (max-width: 640px) {
-  .secondaryButton,
-  .successButton {
-    width: 100%;
-    flex: 1 1 100%;
   }
 }

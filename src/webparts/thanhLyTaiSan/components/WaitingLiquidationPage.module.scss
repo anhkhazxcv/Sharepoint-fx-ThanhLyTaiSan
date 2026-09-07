@@ -82,6 +82,35 @@
   stroke-linejoin: round;
 }
 
+.spinnerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.waitSpinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid $mag-border-input;
+  border-top-color: $mag-accent-dark;
+  border-radius: 50%;
+  animation: waitSpinnerRotate 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.spinnerLabel {
+  color: $mag-text-accent;
+  font-size: 13px;
+  font-weight: $mag-weight-semibold;
+}
+
+@keyframes waitSpinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .messageBar {
   width: min(620px, 100%);
   margin-top: 4px;

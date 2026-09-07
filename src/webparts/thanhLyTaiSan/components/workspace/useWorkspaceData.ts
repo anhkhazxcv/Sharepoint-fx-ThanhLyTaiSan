@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import type { SPHttpClient } from '@microsoft/sp-http';
 import type { IOrderDetail } from '../orderDetail/types';
 import type { IAssetItem, ICartItem } from '../types';
@@ -17,10 +18,31 @@ import { useToast } from '../ToastProvider';
 import { LST_SAN_PHAM } from '../constants/sharePointLists';
 import { mapOrderDetailToTransactionRecord, mapTransactionRecordToOrderDetail } from './orderMappers';
 import type { TAdminActionLoading } from './orderActions';
+import { ROUTE_PATHS } from './routePaths';
 
 const MAX_SHAREPOINT_RETRIES: number = 5;
 
 export type TWorkspaceTab = 'register' | 'cart' | 'orders' | 'admin' | 'assets';
+
+function getTabFromPathname(pathname: string): TWorkspaceTab {
+  if (pathname.indexOf(ROUTE_PATHS.cart) === 0) {
+    return 'cart';
+  }
+
+  if (pathname.indexOf(ROUTE_PATHS.admin) === 0) {
+    return 'admin';
+  }
+
+  if (pathname.indexOf(ROUTE_PATHS.adminAssets) === 0) {
+    return 'assets';
+  }
+
+  if (pathname.indexOf(ROUTE_PATHS.orders) === 0) {
+    return 'orders';
+  }
+
+  return 'register';
+}
 
 export interface IWorkspaceDataProps {
   userDisplayName: string;
@@ -32,13 +54,12 @@ export interface IWorkspaceDataProps {
 export function useWorkspaceData(props: IWorkspaceDataProps): {
   showToast: ReturnType<typeof useToast>['showToast'];
   activeTab: TWorkspaceTab;
-  setActiveTab: React.Dispatch<React.SetStateAction<TWorkspaceTab>>;
   transactionRecords: IUserTransactionRecord[];
   setTransactionRecords: React.Dispatch<React.SetStateAction<IUserTransactionRecord[]>>;
   adminTransactionRecords: IUserTransactionRecord[];
   setAdminTransactionRecords: React.Dispatch<React.SetStateAction<IUserTransactionRecord[]>>;
-  selectedOrderId: string | undefined;
-  setSelectedOrderId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  isAdminRoleChecked: boolean;
+  currentAdminOrderId: string | undefined;
   assets: IAssetItem[];
   setAssets: React.Dispatch<React.SetStateAction<IAssetItem[]>>;
   isLoadingAssets: boolean;
@@ -75,19 +96,18 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
   handleRequestOpenSession: () => void;
   handleCancelOpenSession: () => void;
   handleConfirmOpenSession: () => void;
-  openOrderDetail: (order: IOrderDetail) => void;
-  showOrderList: () => void;
-  showAdminList: () => void;
-  showAdminAssetList: () => void;
-  selectedOrder: IOrderDetail | undefined;
   isAdminPreSessionMode: boolean;
   checkStartOrderStatus: () => Promise<void>;
 } {
   const { showToast } = useToast();
-  const [activeTab, setActiveTab] = React.useState<TWorkspaceTab>('register');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const activeTab: TWorkspaceTab = getTabFromPathname(location.pathname);
+  const currentAdminOrderId: string | undefined = matchPath(ROUTE_PATHS.adminOrderDetailPattern, location.pathname)
+    ?.params.orderId;
   const [transactionRecords, setTransactionRecords] = React.useState<IUserTransactionRecord[]>([]);
   const [adminTransactionRecords, setAdminTransactionRecords] = React.useState<IUserTransactionRecord[]>([]);
-  const [selectedOrderId, setSelectedOrderId] = React.useState<string | undefined>(undefined);
+  const [isAdminRoleChecked, setIsAdminRoleChecked] = React.useState<boolean>(false);
   const [assets, setAssets] = React.useState<IAssetItem[]>([]);
   const [cartLineRecords, setCartLineRecords] = React.useState<ICartLineRecord[]>([]);
   const [isLoadingAssets, setIsLoadingAssets] = React.useState<boolean>(true);
@@ -224,11 +244,13 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
     isUserAdmin(props.siteUrl, props.spHttpClient, props.userEmail)
       .then((result: boolean): void => {
         setHasAdminRole(result);
+        setIsAdminRoleChecked(true);
       })
       .catch((error: Error): void => {
         // eslint-disable-next-line no-console
         console.error('Không thể kiểm tra quyền admin', error);
         setHasAdminRole(false);
+        setIsAdminRoleChecked(true);
       });
   }, [props.siteUrl, props.spHttpClient, props.userEmail]);
 
@@ -328,12 +350,6 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
     }
   }, [isStartOrderEnabled]);
 
-  React.useEffect(() => {
-    if (!hasAdminRole && (activeTab === 'admin' || activeTab === 'assets')) {
-      setActiveTab('orders');
-    }
-  }, [activeTab, hasAdminRole]);
-
   const checkStartOrderStatus = React.useCallback((): Promise<void> => {
     setIsCheckingStartOrder(true);
     setStartOrderError('');
@@ -358,15 +374,19 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
   }, [checkStartOrderStatus]);
 
   const orders: IOrderDetail[] = React.useMemo((): IOrderDetail[] => {
-    return transactionRecords.map((record: IUserTransactionRecord): IOrderDetail => {
-      return mapTransactionRecordToOrderDetail(record, assets, bankInfoMap);
-    });
+    return transactionRecords
+      .map((record: IUserTransactionRecord): IOrderDetail => {
+        return mapTransactionRecordToOrderDetail(record, assets, bankInfoMap);
+      })
+      .sort((left: IOrderDetail, right: IOrderDetail): number => right.purchaseDate.localeCompare(left.purchaseDate));
   }, [assets, bankInfoMap, transactionRecords]);
 
   const adminOrders: IOrderDetail[] = React.useMemo((): IOrderDetail[] => {
-    return adminTransactionRecords.map((record: IUserTransactionRecord): IOrderDetail => {
-      return mapTransactionRecordToOrderDetail(record, assets, bankInfoMap);
-    });
+    return adminTransactionRecords
+      .map((record: IUserTransactionRecord): IOrderDetail => {
+        return mapTransactionRecordToOrderDetail(record, assets, bankInfoMap);
+      })
+      .sort((left: IOrderDetail, right: IOrderDetail): number => right.purchaseDate.localeCompare(left.purchaseDate));
   }, [adminTransactionRecords, assets, bankInfoMap]);
 
   const purchasedCount: number = React.useMemo((): number => {
@@ -377,11 +397,10 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
 
   const getOrderById = React.useCallback(
     (orderId: string): IOrderDetail | undefined => {
-      const sourceOrders: IOrderDetail[] = activeTab === 'admin' ? adminOrders : orders;
-      const matchedOrder: IOrderDetail[] = sourceOrders.filter((order: IOrderDetail) => order.orderId === orderId);
+      const matchedOrder: IOrderDetail[] = adminOrders.filter((order: IOrderDetail) => order.orderId === orderId);
       return matchedOrder.length ? matchedOrder[0] : undefined;
     },
-    [activeTab, adminOrders, orders]
+    [adminOrders]
   );
 
   const updateTransactionStatusInState = React.useCallback((orderId: string, status: string): void => {
@@ -436,10 +455,9 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
       setAdminTransactionRecords((prevRecords: IUserTransactionRecord[]): IUserTransactionRecord[] => {
         return [nextRecord].concat(prevRecords);
       });
-      setSelectedOrderId(orderDetail.orderId);
-      setActiveTab('orders');
+      navigate(ROUTE_PATHS.orderDetail(orderDetail.orderId));
     },
-    [props.userEmail]
+    [navigate, props.userEmail]
   );
 
   const handleRequestOpenSession = React.useCallback((): void => {
@@ -484,46 +502,17 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
       .catch((): void => undefined);
   }, [checkStartOrderStatus, hasAdminRole, isOpeningSession, props.siteUrl, props.spHttpClient, showToast]);
 
-  const openOrderDetail = React.useCallback((order: IOrderDetail): void => {
-    setSelectedOrderId(order.orderId);
-  }, []);
-
-  const showOrderList = React.useCallback((): void => {
-    setSelectedOrderId(undefined);
-    setActiveTab('orders');
-  }, []);
-
-  const showAdminList = React.useCallback((): void => {
-    if (!hasAdminRole) {
-      return;
-    }
-
-    setSelectedOrderId(undefined);
-    setActiveTab('admin');
-  }, [hasAdminRole]);
-
-  const showAdminAssetList = React.useCallback((): void => {
-    if (!hasAdminRole) {
-      return;
-    }
-
-    setSelectedOrderId(undefined);
-    setActiveTab('assets');
-  }, [hasAdminRole]);
-
-  const selectedOrder: IOrderDetail | undefined = selectedOrderId ? getOrderById(selectedOrderId) : undefined;
   const isAdminPreSessionMode: boolean = !isStartOrderEnabled && hasAdminRole && isAdminPreviewMode;
 
   return {
     showToast,
     activeTab,
-    setActiveTab,
     transactionRecords,
     setTransactionRecords,
     adminTransactionRecords,
     setAdminTransactionRecords,
-    selectedOrderId,
-    setSelectedOrderId,
+    isAdminRoleChecked,
+    currentAdminOrderId,
     assets,
     setAssets,
     isLoadingAssets,
@@ -560,11 +549,6 @@ export function useWorkspaceData(props: IWorkspaceDataProps): {
     handleRequestOpenSession,
     handleCancelOpenSession,
     handleConfirmOpenSession,
-    openOrderDetail,
-    showOrderList,
-    showAdminList,
-    showAdminAssetList,
-    selectedOrder,
     isAdminPreSessionMode,
     checkStartOrderStatus
   };

@@ -64,8 +64,10 @@ $mag-font-title-xl: 28px;
 $mag-font-title-lg: 24px;
 $mag-font-title-md: 20px;
 $mag-font-body: 15px;
+$mag-font-sm: 14px;
 $mag-font-meta: 13px;
 $mag-font-label: 12px;
+$mag-font-display: 36px;
 
 $mag-weight-regular: 400;
 $mag-weight-medium: 500;
@@ -82,6 +84,7 @@ $mag-weight-bold: 700;
 $mag-shadow-card: 0 8px 24px rgba(84, 58, 20, 0.12);
 $mag-shadow-dialog: 0 22px 40px rgba(67, 46, 23, 0.18);
 $mag-shadow-primary: 0 12px 24px rgba(139, 96, 33, 0.2);
+$mag-focus-ring: 0 0 0 3px rgba(183, 138, 54, 0.16);
 
 // Transitions
 $mag-transition-fast: 0.18s ease;
@@ -102,6 +105,11 @@ $mag-transition-fast: 0.18s ease;
   &:not(:disabled):hover {
     transform: translateY(-1px);
     box-shadow: 0 14px 28px rgba(139, 96, 33, 0.26);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $mag-focus-ring;
   }
 
   &:disabled {
@@ -129,6 +137,11 @@ $mag-transition-fast: 0.18s ease;
     border-color: $mag-accent-gold;
   }
 
+  &:focus-visible {
+    outline: none;
+    box-shadow: $mag-focus-ring;
+  }
+
   &:disabled {
     cursor: not-allowed;
     opacity: 0.55;
@@ -146,6 +159,11 @@ $mag-transition-fast: 0.18s ease;
   font-size: $mag-font-meta;
   font-weight: $mag-weight-bold;
   cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $mag-focus-ring;
+  }
 
   &:disabled {
     cursor: not-allowed;

@@ -217,7 +217,7 @@ export function AdminAssetImportDialog(props: IAdminAssetImportDialogProps): Rea
 
       <ConfirmDialog
         isOpen={props.isOpen}
-        title={isResultStep ? 'Kết quả import' : 'Import Excel sản phẩm'}
+        title={isResultStep ? 'Kết quả import' : 'Import sản phẩm'}
         isBlocking={isBlocking}
         onDismiss={props.onClose}
         secondaryAction={

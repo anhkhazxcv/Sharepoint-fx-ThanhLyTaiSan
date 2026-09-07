@@ -35,23 +35,6 @@
   margin-bottom: 18px;
 }
 
-.kpiCard {
-  @include magPageCard;
-  padding: 16px;
-  background: $mag-surface-card;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: $mag-font-meta;
-  color: $mag-text-muted;
-
-  strong {
-    font-size: $mag-font-title-md;
-    font-weight: $mag-weight-bold;
-    color: $mag-text-title;
-  }
-}
-
 .filterPanel,
 .advancedFilters {
   display: grid;

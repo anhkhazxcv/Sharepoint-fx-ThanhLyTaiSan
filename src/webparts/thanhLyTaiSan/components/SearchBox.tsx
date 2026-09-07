@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FiSearch } from 'react-icons/fi';
 import styles from './SearchBox.module.scss';
 
 export interface ISearchBoxProps {
@@ -14,12 +15,7 @@ export function SearchBox(props: ISearchBoxProps): React.ReactElement {
   return (
     <label className={styles.searchBox}>
       <span className={styles.icon} aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path
-            d="M10.5 4.5a6 6 0 104.243 10.243l4.257 4.257 1.414-1.414-4.257-4.257A6 6 0 0010.5 4.5zm0 2a4 4 0 110 8 4 4 0 010-8z"
-            fill="currentColor"
-          />
-        </svg>
+        <FiSearch />
       </span>
       <input
         className={styles.input}
